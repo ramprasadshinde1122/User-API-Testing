@@ -1,6 +1,7 @@
 package api.tests;
 
 import api.base.BaseClass;
+import api.payloads.User;
 import api.utilities.ExtentReportManager;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -16,16 +17,15 @@ public class UserTests extends BaseClass {
     @Test
     public void createUser(){
         test = new ExtentReportManager().extentTest(extentReports,"Create new user");
-        HashMap<String, Object> user = new HashMap<>();
-        user.put("id", 1);
-        user.put("username", "pavanshinde");
-        user.put("firstName", "Pavan");
-        user.put("lastName", "Shinde");
-        user.put("email", "pavanshinde@gmail.com");
-        user.put("password", "pass@123");
-        user.put("phone", "9234566787");
-        user.put("userStatus", 0);
-        List<HashMap<String, Object>> userList = new ArrayList<>();
+        User user = new User();
+        user.setId(2);
+        user.setFirstName("Laptop");
+        user.setLastName("Dell");
+        user.setEmail("laptopdell@gmail.com");
+        user.setPhone("6789456787");
+        user.setPassword("password123");
+        user.setUserStatus(0);
+        List<User> userList = new ArrayList<>();
         userList.add(user);
         test.info("Payload : "+userList);
 
@@ -33,7 +33,7 @@ public class UserTests extends BaseClass {
                 .contentType("application/json")
                 .body(userList)
                 .when()
-                .post("https://petstore.swagger.io/v2/user/createWithList");
+                .post(endpoints.getProperty("postApiCreateUser"));
         response.then().log().all();
         test.info("Response : "+response.asString());
         try {
