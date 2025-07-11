@@ -4,9 +4,11 @@ import api.utilities.ExtentReportManager;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.util.Properties;
 import io.restassured.RestAssured;
 
@@ -23,6 +25,12 @@ public class BaseClass {
        endpoints = new Properties();
         endpoints.load(fileInputStream);
         RestAssured.baseURI = endpoints.getProperty("baseUrl");
+    }
+
+    @BeforeMethod
+    public void initializeExtentTest(Method method) {
+        String testName = method.getName(); // Gets the test method name
+        test = new ExtentReportManager().extentTest(extentReports, testName);
     }
 
     @AfterSuite

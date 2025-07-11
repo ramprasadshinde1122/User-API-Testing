@@ -2,12 +2,12 @@ package api.tests;
 
 import api.base.BaseClass;
 import api.payloads.User;
-import api.utilities.ExtentReportManager;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.testng.Assert;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import static io.restassured.RestAssured.given;
 import io.restassured.response.Response;
@@ -21,7 +21,6 @@ public class UserTests extends BaseClass {
 
     @Test
     public void createUser(){
-        test = new ExtentReportManager().extentTest(extentReports,"Create new user");
         User user = new User();
         user.setId(2);
         user.setUsername("laptop_dell");
@@ -50,7 +49,6 @@ public class UserTests extends BaseClass {
 
     @Test(dependsOnMethods = "createUser")
     public void getUser(){
-        test = new ExtentReportManager().extentTest(extentReports,"Get user");
         Response response = given()
                 .pathParam("username","laptop_dell")
                 .log().uri()
@@ -68,7 +66,6 @@ public class UserTests extends BaseClass {
 
     @Test
     public void createUserList() throws IOException {
-        test = new ExtentReportManager().extentTest(extentReports,"Create user list");
         FileInputStream fileInputStream = new FileInputStream("src/test/resources/apiResources/excelData/createUserDetails.xlsx");
         Workbook workbook = new XSSFWorkbook(fileInputStream);
         Sheet sheet = workbook.getSheet("Sheet1");
@@ -101,5 +98,11 @@ public class UserTests extends BaseClass {
             test.fail("Status code validation failed: " + e.getMessage());
             Assert.fail("API Response validation failed");
         }
+    }
+
+    @Test
+    @Parameters({"tester"})
+    public void aboutTester(String tester){
+        System.out.println("Tester is : "+ tester);
     }
 }

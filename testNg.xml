@@ -1,0 +1,9 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="apiTesting" parallel="classes" thread-count="1">
+    <parameter name="tester" value="Ramprasad" />
+    <test name="userApi">
+        <classes>
+            <class name="api.tests.UserTests" />
+        </classes>
+    </test>
+</suite>
