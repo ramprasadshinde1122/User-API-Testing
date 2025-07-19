@@ -12,7 +12,7 @@ public  class ExtentReportManager {
 
     public ExtentReports extentReports(){
         String date = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        ExtentSparkReporter extentSparkReporter = new ExtentSparkReporter("testReports/apiTestReport_"+date+".html");
+        ExtentSparkReporter extentSparkReporter = new ExtentSparkReporter("testReports/index.html");
         ExtentReports extentReports = new ExtentReports();
         extentReports.attachReporter(extentSparkReporter);
         extentReports.setSystemInfo("Environment","QA");
